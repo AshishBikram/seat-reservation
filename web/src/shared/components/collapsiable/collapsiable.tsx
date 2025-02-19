@@ -25,7 +25,7 @@ const Collapsible: React.FC<CollapsibleProps> = ({
     }
 
     return (
-        <div className="shadow rounded-md overflow-hidden mt-3">
+        <div className="shadow rounded-md overflow-hidden mt-3" key={vehicle.id}>
             <div className="w-full p-4 bg-gray-50 hover:bg-gray-200 flex justify-between items-center">
                 <button className="flex-grow text-left flex items-center space-x-4" onClick={() => setIsOpen(!isOpen)}>
                     <img src={image || Bus} alt={vehicle?.name} width={60} height={60} className="rounded-full" />
@@ -54,7 +54,7 @@ const Collapsible: React.FC<CollapsibleProps> = ({
             </div>
             <div
                 className={`transition-all duration-300 ease-in-out ${
-                    isOpen && isCollapsable ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+                    isOpen && isCollapsable ? " opacity-100" : "max-h-0 opacity-0"
                 } overflow-hidden`}
             >
                 {

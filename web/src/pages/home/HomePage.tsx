@@ -15,6 +15,7 @@ const HomePage = () => {
     })
     return (
         <ContainerLayout
+            key={"book-now"}
             title={"Book Now"}
         >
             <div>
@@ -25,16 +26,14 @@ const HomePage = () => {
                     }}/>
             </div>
             {
-                vehicleList?.data && search && vehicleList?.data?.map((vehicle) => (
+                vehicleList?.data && search && vehicleList?.data?.map((vehicle, index) => (
                     <>
                         <Collapsiable
                             isCollapsable={true}
                             vehicle={vehicle}
                             key={vehicle.id}
                         >
-                            <div className={"flex"}>
-                                <SeatsLayout vehicle={vehicle} search={search}/>
-                            </div>
+                            <SeatsLayout key={index} vehicle={vehicle} search={search}/>
                         </Collapsiable>
                     </>
                 ))

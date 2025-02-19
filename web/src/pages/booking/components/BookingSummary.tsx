@@ -30,7 +30,7 @@ const BookingSummary = ({ search, totalPrice,selectedSeats }: BookingSummaryProp
 
                 <div className="mt-4">
                     <h3 className="text-lg font-semibold mb-2">Selected Seats</h3>
-                    <div className="grid grid-cols-4 gap-2">
+                    <div className="flex gap-2">
                         {selectedSeats?.map((seat) => (
                             <SeatItem variant={"unavailable"} title={seat?.seatNumber} />
                         ))}

@@ -5,7 +5,7 @@ export function generateBusSeats(rows: number, leftSeats: number, rightSeats: nu
     let seatNumberA = 1, seatNumberB = 1, seatNumberC = 1;
 
     for (let r = 0; r < rows; r++) {
-        if (r === rows) {
+        if (r === rows -1) {
             busSeats.push(...generateLastRow(leftSeats, rightSeats, seatNumberC, r));
         } else {
             busSeats.push(...generateRow(leftSeats, rightSeats, seatNumberA, seatNumberB, r));

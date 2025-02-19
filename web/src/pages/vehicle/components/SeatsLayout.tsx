@@ -1,6 +1,6 @@
 import {ISeatsId, IVehicleL} from "@core/service/vehicle/vehicle.modal.ts";
 import SeatItem from "@pages/vehicle/components/SeatItem.tsx";
-import {Fragment, useCallback, useEffect, useMemo, useState} from "react";
+import { useCallback, useEffect, useMemo, useState} from "react";
 import SeatItemVariants from "@pages/vehicle/components/SeatItemVariants.tsx";
 import SelectionSummary from "@pages/vehicle/components/SelectionSummary.tsx";
 import {useNavigate} from "react-router";
@@ -70,7 +70,6 @@ const SeatsLayout = ({vehicle, search}:SeatsLayoutProps) => {
     const getVariant = useCallback((seat: ISeatsId) => {
         const isBooked = bookedSeats?.data.findIndex(d => d.seatID === seat?.id) !== -1 ||
             concurrentBooking?.findIndex(d => d === seat?.id) !== -1;
-        console.log(seat,isBooked,concurrentBooking, bookedSeats);
         const isSelected = selectedSeats?.findIndex(data => data.id === seat?.id) !== -1
         if(isBooked){
             return "unavailable"
@@ -92,40 +91,43 @@ const SeatsLayout = ({vehicle, search}:SeatsLayoutProps) => {
     return (
         <>
             <div className={"flex gap-4"}>
-                <div className={"w-[250px] bg-gray-200 rounded-sm p-5"}>
-                    <div className={`grid grid-cols-${vehicle?.leftSeats + vehicle?.rightSeats + 1} gap-2`}>
+                <div className={"w-[300px] bg-gray-200 rounded-sm p-5"}>
+                    <div className={`flex flex-col gap-2`}>
 
                         {Array.from({length: vehicle?.totalRows}).map((_, rowIndex) => {
                             return (
-                                <Fragment key={rowIndex}>
+                                <div key={rowIndex} className={"flex justify-center gap-2"}>
                                     {Array.from({length: vehicle?.leftSeats + vehicle?.rightSeats + 1}).map((_, colIndex) => {
-                                        const d = vehicle?.seats?.find(d => d.colNumber === colIndex && d.rowNumber === rowIndex + 1)
+
+                                        const d = vehicle?.seats?.find(d => d.colNumber === colIndex && d.rowNumber === rowIndex)
                                         const variant = getVariant(d!)
                                         if (!d) {
                                             return (
                                                 (
-                                                    <div key={`aisle-${rowIndex}-${colIndex}`}/>
+                                                    <div className={"w-[35px] h-[35px]"} key={`seat-${rowIndex}-${colIndex}`}/>
                                                 )
                                             )
                                         } else {
                                             return (
-                                                <SeatItem
-                                                    variant={variant}
-                                                    title={d.seatNumber}
-                                                    key={`seat-${rowIndex}-${colIndex}`}
-                                                    onClick={() => {
-                                                        handleSelect(d)
-                                                    }}
-                                                />
+                                                <div key={`seat-${rowIndex}-${colIndex}`}>
+                                                    <SeatItem
+                                                        variant={variant}
+                                                        title={d.seatNumber}
+
+                                                        onClick={() => {
+                                                            handleSelect(d)
+                                                        }}
+                                                    />
+                                                </div>
                                             );
                                         }
                                     })}
-                                </Fragment>
+                                </div>
                             );
                         })}
                     </div>
                     <div
-                        className={"flex gap-2 mt-5"}
+                        className={"grid grid-cols-3 gap-2 mt-5"}
                     >
                         <SeatItemVariants variants={"available"}/>
                         <SeatItemVariants variants={"unavailable"}/>
